@@ -1,17 +1,7 @@
 from pyspark.sql import SparkSession
 from glob import glob
 import logging
-import os
-from boto3.session import Session
-from dotenv import load_dotenv
 
-load_dotenv()
-ACCESS_KEY = os.getenv("ACCESS_KEY")
-SECRET_KEY = os.getenv("SECRET_KEY")
-
-session = Session(aws_access_key_id=ACCESS_KEY,
-                  aws_secret_access_key=SECRET_KEY)
-s3 = session.resource('s3')
 
 class SilverTransformation:
     """
@@ -25,10 +15,11 @@ class SilverTransformation:
 
     @staticmethod
     def formatted_source_paths():
-        return [file.replace('\\', "/") for file in glob("data/bronze/*")]
+        return [file.replace('\\', "/") for file in glob("/data/bronze/*")]
 
     def read_from_bronze(self):
         try:
+            self.logger.info(f"reading data from {self.formatted_source_paths()}")
             df = self.spark.read.json(self.formatted_source_paths(), multiLine=True)
         except Exception as e:
             self.logger.error(e)
@@ -36,7 +27,14 @@ class SilverTransformation:
         return df
 
     def load(self):
-        self.read_from_bronze().show()
+        df = self.read_from_bronze()
+        df.show()
+        assert df.count() > 0, "Nothing to process"
+        try:
+            df.write.partitionBy("state").mode("overwrite").parquet("/data/silver")
+        except Exception as e:
+            self.logger.error(e)
 
 
-SilverTransformation().load()
+if __name__ == '__main__':
+    SilverTransformation().load()
