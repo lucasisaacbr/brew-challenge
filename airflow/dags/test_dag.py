@@ -13,7 +13,7 @@ default_args = {
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
 }
-dag = DAG(dag_id='testing_stuff',
+dag = DAG(dag_id='brew_ssh_test',
           default_args=default_args,
           schedule_interval='0,10,20,30,40,50 * * * *',
           dagrun_timeout=timedelta(seconds=120))
@@ -22,7 +22,7 @@ t1_bash = """
 echo 'Hello World'
 """
 t1 = SSHOperator(
-    ssh_conn_id='test',
+    ssh_conn_id='brew-notebooks',
     task_id='test_ssh_operator',
     command=t1_bash,
     dag=dag)

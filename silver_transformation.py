@@ -1,4 +1,5 @@
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import trim
 from glob import glob
 import logging
 
@@ -28,10 +29,11 @@ class SilverTransformation:
 
     def load(self):
         df = self.read_from_bronze()
-        df.show()
         assert df.count() > 0, "Nothing to process"
         try:
-            df.write.partitionBy("state").mode("overwrite").parquet("/data/silver")
+            df = df.withColumn("country", trim(df.country))
+            df = df.withColumn("state", trim(df.state))
+            df.write.partitionBy("country", "state").mode("overwrite").parquet("/data/silver")
         except Exception as e:
             self.logger.error(e)
 
