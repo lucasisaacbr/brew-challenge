@@ -4,3 +4,4 @@
 data/
 *.ipynb
 airflow/logs/*
+*__pycache__

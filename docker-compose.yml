@@ -87,7 +87,7 @@ x-airflow-common:
 
 services:
   pypark-notebook:
-    image: lucasisaacbr/pyspark-notebook:latest
+    image: lucasisaacbr/pyspark-notebook:2
     container_name: brew-notebooks
     user: root
     working_dir: "/home/lisaac"
