@@ -87,7 +87,7 @@ x-airflow-common:
 
 services:
   pypark-notebook:
-    image: lucasisaacbr/pyspark-notebook:1
+    image: lucasisaacbr/pyspark-notebook:latest
     container_name: brew-notebooks
     user: root
     working_dir: "/home/lisaac"
@@ -101,6 +101,7 @@ services:
       - "8888:8888"
       - "4040:4040"
       - "4041:4041"
+      - "22:22"
     volumes:
       - data-volume:/data
   postgres:
@@ -117,6 +118,8 @@ services:
       retries: 5
       start_period: 5s
     restart: always
+    networks:
+      - brew-network
 
   redis:
     image: redis:latest
@@ -129,6 +132,8 @@ services:
       retries: 50
       start_period: 30s
     restart: always
+    networks:
+      - brew-network
 
   airflow-webserver:
     <<: *airflow-common
@@ -142,6 +147,8 @@ services:
       retries: 5
       start_period: 30s
     restart: always
+    networks:
+      - brew-network
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
@@ -157,6 +164,8 @@ services:
       retries: 5
       start_period: 30s
     restart: always
+    networks:
+      - brew-network
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
@@ -180,6 +189,8 @@ services:
       # See https://airflow.apache.org/docs/docker-stack/entrypoint.html#signal-propagation
       DUMB_INIT_SETSID: "0"
     restart: always
+    networks:
+      - brew-network
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
@@ -195,6 +206,8 @@ services:
       retries: 5
       start_period: 30s
     restart: always
+    networks:
+      - brew-network
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
@@ -275,6 +288,8 @@ services:
       _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
       _PIP_ADDITIONAL_REQUIREMENTS: ''
     user: "0:0"
+    networks:
+      - brew-network
     volumes:
       - ${AIRFLOW_PROJ_DIR:-.}:/sources
 
@@ -282,6 +297,8 @@ services:
     <<: *airflow-common
     profiles:
       - debug
+    networks:
+      - brew-network
     environment:
       <<: *airflow-common-env
       CONNECTION_CHECK_MAX_COUNT: "0"
@@ -308,6 +325,8 @@ services:
       retries: 5
       start_period: 30s
     restart: always
+    networks:
+      - brew-network
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
