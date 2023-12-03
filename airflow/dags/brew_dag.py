@@ -12,9 +12,9 @@ default_args = {
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
 }
-dag = DAG(dag_id='brew_ssh_test',
+dag = DAG(dag_id='brew_dag',
           default_args=default_args,
-          schedule_interval='0,10,20,30,40,50 * * * *',
+          schedule_interval='*/5 * * * *',
           dagrun_timeout=timedelta(seconds=120))
 
 bronze_bash = """
