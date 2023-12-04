@@ -32,6 +32,9 @@ Run the following command to create all the necessary images for the execution.
 
 > check the `Networks` key from the JSON to find the IPAddress
 
+![image](https://github.com/lucasisaacbr/brew-challenge/assets/22127369/c7982e32-1c1b-40eb-9398-a7097ed437c6)
+
+
 Once you get the `IPAddress` we need to configure the Airflow Connection inside  the Dashboard:
 
 Airflow interface can be accessed at http://localhost:8080
@@ -102,9 +105,21 @@ It may cause conflicts due to I/O operations on disk.**
 
 #### Bronze
 
+![image](https://github.com/lucasisaacbr/brew-challenge/assets/22127369/8c3f9ea2-4000-4dab-a31f-b41ef08e4b88)
+
+
 #### Silver
+
+![image](https://github.com/lucasisaacbr/brew-challenge/assets/22127369/a94f73ab-575e-47d9-b5dd-b21c88db1bd6)
+
 
 #### Gold 
 
-> If you want to play with the data you can create a notebook in JupyterHub, the token to access it always changes. Check the token in the logs from `docker compose up`
-> 
+![image](https://github.com/lucasisaacbr/brew-challenge/assets/22127369/f772f798-e202-4eac-9cac-ae0cebdb2666)
+
+
+> If you want to play with the data you can create a notebook in JupyterHub
+> Just access: http://127.0.0.1:8888/lab?token={RANDOM_TOKEN}
+> The token to access it always changes. Check the token in the logs from `docker compose up` as in the example:
+
+![image](https://github.com/lucasisaacbr/brew-challenge/assets/22127369/08988df0-c352-47d8-b772-d01994a29b1b)
