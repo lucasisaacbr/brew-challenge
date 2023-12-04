@@ -45,6 +45,7 @@ class BronzeExtraction:
             except FileNotFoundError as e:
                 self.logger.error(e)
                 raise
+        self.logger.info("Job Completed Successfully!")
 
 
 if __name__ == '__main__':
