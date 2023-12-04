@@ -31,11 +31,13 @@ class SilverTransformation:
         df = self.read_from_bronze()
         assert df.count() > 0, "Nothing to process"
         try:
-            df = df.withColumn("country", trim(df.country))
-            df = df.withColumn("state", trim(df.state))
+            # partionBy removes the column from the dataframe, We use it later, so we are duplicating it here.
+            df = df.withColumn("brewery_country", trim(df.country))
+            df = df.withColumn("brewery_state", trim(df.state))
             df.write.partitionBy("country", "state").mode("overwrite").parquet("/data/silver")
         except Exception as e:
             self.logger.error(e)
+        self.logger.info("Job Completed Successfully!")
 
 
 if __name__ == '__main__':

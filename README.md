@@ -52,19 +52,23 @@ docker exec -it brew-notebooks bash
 
 In the bash terminal enable the ssh server
 ```commandline
-service ssh status
-service ssh start # if is not running
+service ssh start
 ```
 
-To facilitate the access change the password of the user `root`
+To facilitate the access grant permissions to $NB_USER and change the password of the user `root`
 > Note: This is not recommended in production environments. It's just for the demo purpose.
 ```
+chown -R ${NB_USER} /home/${NB_USER}
 passwd
 root
 root
 ```
+**Why are we doing this ?** 
+ - This will give access to user create files in JupyterHub
+ - the password is required to connect SSH on airflow, and we don't know the current password for the root user on this image.
 
 
+To test if the SSH Connection is working, you can run this DAG:
+> http://localhost:8080/dags/brew_ssh_test
 
-To test, you can run this DAG:
-http://localhost:8080/dags/brew_ssh_test
+
