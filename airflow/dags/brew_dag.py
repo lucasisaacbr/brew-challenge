@@ -18,7 +18,7 @@ dag = DAG(dag_id='brew_dag',
           dagrun_timeout=timedelta(seconds=120))
 
 bronze_bash = """
-python /home/lisaac/work/bronze_extraction.py 
+/opt/conda/bin/python /home/lisaac/work/bronze_extraction.py 
 """
 bronze_task = SSHOperator(
     ssh_conn_id='brew-notebooks',
@@ -27,7 +27,7 @@ bronze_task = SSHOperator(
     dag=dag)
 
 silver_bash = """
-python /home/lisaac/work/silver_transformation.py
+/opt/conda/bin/python /home/lisaac/work/silver_transformation.py
 """
 silver_task = SSHOperator(
     ssh_conn_id='brew-notebooks',
@@ -36,7 +36,7 @@ silver_task = SSHOperator(
     dag=dag)
 
 gold_bash = """
-python /home/lisaac/work/gold_transformation.py
+/opt/conda/bin/python /home/lisaac/work/gold_transformation.py
 """
 gold_task = SSHOperator(
     ssh_conn_id='brew-notebooks',
