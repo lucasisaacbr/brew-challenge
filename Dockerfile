@@ -9,6 +9,7 @@ RUN chmod 777 /data /data/bronze /data/silver /data/gold # set permission to wri
 RUN pip install pyspark
 RUN service ssh start
 RUN service ssh restart
+RUN chown -R ${NB_USER} /home/${NB_USER}
 EXPOSE 22
 EXPOSE 4041
 EXPOSE 4040

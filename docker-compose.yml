@@ -92,7 +92,7 @@ services:
     user: root
     working_dir: "/home/lisaac"
     environment:
-      - NB_USER="lisaac"
+      - NB_USER=lisaac
       - CHOWN_HOME=yes
       - GRANT_SUDO=yes
     networks:
