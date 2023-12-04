@@ -1,6 +1,14 @@
 # Brew Challenge
 
-### Building the  Image
+### What you need to begin ?
+- Docker
+- Docker-Compose
+
+### What containers it will provide ?
+- brew-notebooks: A JupyterHub platform to play with the data. 
+- airflow: All containers needed so Airflow can manage the jobs.
+
+### Building the Docker Image
 
 This image contains the pyspark-jupyter notebooks. But also some configurations were included to support SSH connections.
 Also, this container contains the Python files with APIs and Spark  Jobs.
@@ -68,7 +76,35 @@ root
  - the password is required to connect SSH on airflow, and we don't know the current password for the root user on this image.
 
 
-To test if the SSH Connection is working, you can run this DAG:
-> http://localhost:8080/dags/brew_ssh_test
+To test if the SSH Connection is working, you can run this DAG: 
+
+http://localhost:8080/dags/brew_ssh_test
 
 
+To activate the `brew_dag` which contains all tasks:
+
+http://localhost:8080/dags/brew_dag
+
+>**PS: It's schedule to run every 15 minutes. Make sure to check if nothing is running  in parallel. 
+It may cause conflicts due to I/O operations on disk.**
+
+#### Brew DAG Tasks Description
+
+> --- 
+> - **Bronze**: Hit the openbrewerydb API and save the JSONs retured inside the volume `/data/bronze`
+> ---
+> - **Silver**: Partitions data by Country and State, then save the files as parquets in `/data/silver/brewery_country={}/brewery_state={})`
+> ---
+> - **Gold**: Read parquets from silver to aggregate the values to return the count of breweries by type and location, prints the results from each country in the screen, and save the files as parquets in `/data/gold/country={}/state={}`
+> ---
+
+### Application logs:
+
+#### Bronze
+
+#### Silver
+
+#### Gold 
+
+> If you want to play with the data you can create a notebook in JupyterHub, the token to access it always changes. Check the token in the logs from `docker compose up`
+> 
