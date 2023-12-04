@@ -18,6 +18,8 @@ To build run:
 
 ```docker build -t {YOUR_DOCKER_HUB_USERNAME}/pyspark-notebook:latest .```
 
+> Important! > On `docker-compoer.yml` please change the image name at line 90 to your new image name created in the last step.
+
 ### Running Docker Compose
 
 Run the following command to create all the necessary images for the execution.
