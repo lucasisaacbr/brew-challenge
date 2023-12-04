@@ -4,15 +4,13 @@
 This image contains the pyspark-jupyter notebooks. But also some configurations were included to support SSH connections.
 
 
-Also, in this container contains the python files with APIs and Spark  Jobs.
+Also, this container contains the Python files with APIs and Spark  Jobs.
 
 The Spark Infrastructure resides in this image as well. 
 
 To build run:
 
-$```docker build -t {YOUR_DOCKER_HUB_USERNAME}/pyspark-notebook:latest ./docker```
-
-ps: the last parameter `./docker` should be executed in the root folder of this repo.
+$```docker build -t {YOUR_DOCKER_HUB_USERNAME}/pyspark-notebook:latest .```
 
 ### Running Docker Compose
 
@@ -24,7 +22,7 @@ check the IPAddress of the brew-notebooks container  (check the `Networks` key f
 
 ``docker inspect brew-notebooks``
 
-Airflow interface can be accessed on http://localhost:8080
+Airflow interface can be accessed at http://localhost:8080
 
 Create a new SSH connection in the panel:
 
@@ -41,7 +39,7 @@ PASSWORD = root
 PORT = 22
 ```
 
-In the brew-notebooks container make sure that the SSH service is working and setup the root password
+In the brew-notebooks container, make sure that the SSH service is working and setup the root password
 
 ```commandline
 docker exec -it brew-notebooks bash
@@ -54,5 +52,5 @@ root
 root
 ```
 
-To test you can run this DAG:
+To test, you can run this DAG:
 http://localhost:8080/dags/brew_ssh_test
